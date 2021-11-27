@@ -18,6 +18,7 @@ export default {
   height: 450px;
   background-color: #fff;
   border-radius: 3px;
+  // color: #000;
   position: absolute;
   left: 50%;
   top: 50%;
