@@ -8,15 +8,15 @@
       <!-- 登录表单区 -->
       <el-form
         class="login_form"
-        :model="ruleForm"
-        :rules="rules"
-        ref="ruleForm"
+        :model="loginForm"
+        :rules="loginFormRules"
+        ref="loginFormRef"
       >
         <!-- 用户名 -->
         <el-form-item prop="name">
           <el-input
             prefix-icon="iconfont icon-user"
-            v-model="ruleForm.name"
+            v-model="loginForm.name"
           ></el-input>
         </el-form-item>
         <!-- 密码 -->
@@ -24,13 +24,13 @@
           <el-input
             type="password"
             prefix-icon="iconfont icon-3702mima"
-            v-model="ruleForm.password"
+            v-model="loginForm.password"
           ></el-input>
         </el-form-item>
         <!-- 按钮区域 -->
         <el-form-item class="btns">
           <el-button type="primary">登录</el-button>
-          <el-button type="info">重置</el-button>
+          <el-button type="info" @click="restLoginForm">重置</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -40,14 +40,14 @@
 export default {
   data () {
     return {
-      ruleForm: {
+      loginForm: {
         // 用户名
         name: '',
         // 密码
         password: ''
       },
       // 表单验证规则
-      rules: {
+      loginFormRules: {
         // 用户名
         name: [
           { required: true, message: '请输入登录名称', trigger: 'blur' },
@@ -59,6 +59,12 @@ export default {
           { min: 6, max: 15, message: '长度在 6 到 15 个字符', trigger: 'blur' }
         ]
       }
+    }
+  },
+  methods: {
+    // 重置表单
+    restLoginForm () {
+      this.$refs.loginFormRef.resetFields()
     }
   }
 }
