@@ -68,8 +68,11 @@ export default {
     },
     // 登录
     login () {
-      this.$refs.loginFormRef.validate(valid => {
-        console.log(valid, 'valid')
+      this.$refs.loginFormRef.validate(async valid => {
+        if (!valid) return false
+        const { data: res } = await this.$http.post('login', this.loginForm)
+        if (res.meta.status !== 200) return console.log('登录失败')
+        else console.log('登录成功')
       })
     }
   }
