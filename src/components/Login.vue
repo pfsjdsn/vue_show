@@ -13,10 +13,10 @@
         ref="loginFormRef"
       >
         <!-- 用户名 -->
-        <el-form-item prop="name">
+        <el-form-item prop="username">
           <el-input
             prefix-icon="iconfont icon-user"
-            v-model="loginForm.name"
+            v-model="loginForm.username"
           ></el-input>
         </el-form-item>
         <!-- 密码 -->
@@ -42,14 +42,14 @@ export default {
     return {
       loginForm: {
         // 用户名
-        name: '',
+        username: '',
         // 密码
         password: ''
       },
       // 表单验证规则
       loginFormRules: {
         // 用户名
-        name: [
+        username: [
           { required: true, message: '请输入登录名称', trigger: 'blur' },
           { min: 3, max: 10, message: '长度在 3 到 10 个字符', trigger: 'blur' }
         ],
@@ -71,8 +71,8 @@ export default {
       this.$refs.loginFormRef.validate(async valid => {
         if (!valid) return false
         const { data: res } = await this.$http.post('login', this.loginForm)
-        if (res.meta.status !== 200) return console.log('登录失败')
-        else console.log('登录成功')
+        if (res.meta.status !== 200) return this.$message.error('登录失败')
+        else return this.$message.success('登录成功')
       })
     }
   }
