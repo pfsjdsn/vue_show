@@ -16,7 +16,7 @@
         <el-menu
           background-color="#323743"
           text-color="#fff"
-          active-text-color="#ffd04b"
+          active-text-color="#459fff"
         >
           <!-- 一级菜单 -->
           <!-- 把id变成字符串形式 -->
@@ -28,7 +28,7 @@
             <!-- 一级菜单的模板区域 -->
             <template slot="title">
               <!-- 图标 -->
-              <i class="el-icon-location"></i>
+              <i :class="iconsObj[item.id]"></i>
               <!-- 文本 -->
               <span>{{ item.authName }}</span>
             </template>
@@ -38,7 +38,7 @@
               :key="subItem.id"
             >
               <template slot="title">
-                <i class="el-icon-location"></i>
+                <i class="el-icon-menu"></i>
                 <span>{{ subItem.authName }}</span>
               </template>
             </el-menu-item>
@@ -55,7 +55,14 @@ export default {
   data () {
     return {
       // 左侧菜单数据
-      menuList: []
+      menuList: [],
+      iconsObj: {
+        125: 'iconfont icon-users',
+        103: 'iconfont icon-tijikongjian',
+        101: 'iconfont icon-shangpin',
+        102: 'iconfont icon-danju',
+        145: 'iconfont icon-baobiao'
+      }
     }
   },
   created () {
@@ -102,5 +109,8 @@ export default {
 }
 .el-main {
   background-color: #e9edf0;
+}
+.iconfont {
+  margin-right: 6%;
 }
 </style>
