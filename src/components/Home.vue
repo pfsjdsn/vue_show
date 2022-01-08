@@ -17,6 +17,7 @@
           background-color="#323743"
           text-color="#fff"
           active-text-color="#459fff"
+          unique-opened
         >
           <!-- 一级菜单 -->
           <!-- 把id变成字符串形式 -->
@@ -106,6 +107,9 @@ export default {
 }
 .el-aside {
   background-color: #323743;
+  .el-menu {
+    border-right: none;
+  }
 }
 .el-main {
   background-color: #e9edf0;
