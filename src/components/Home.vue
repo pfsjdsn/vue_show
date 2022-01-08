@@ -19,18 +19,27 @@
           active-text-color="#ffd04b"
         >
           <!-- 一级菜单 -->
-          <el-submenu index="1">
+          <!-- 把id变成字符串形式 -->
+          <el-submenu
+            :index="item.id + ''"
+            v-for="item in menuList"
+            :key="item.id"
+          >
             <!-- 一级菜单的模板区域 -->
             <template slot="title">
               <!-- 图标 -->
               <i class="el-icon-location"></i>
               <!-- 文本 -->
-              <span>导航一</span>
+              <span>{{ item.authName }}</span>
             </template>
-            <el-menu-item index="1-4-1">
+            <el-menu-item
+              :index="subItem.id + ''"
+              v-for="subItem in item.children"
+              :key="subItem.id"
+            >
               <template slot="title">
                 <i class="el-icon-location"></i>
-                <span>导航一</span>
+                <span>{{ subItem.authName }}</span>
               </template>
             </el-menu-item>
           </el-submenu>
