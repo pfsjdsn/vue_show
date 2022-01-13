@@ -21,6 +21,7 @@
           unique-opened
           :collapse="isCollapse"
           :collapse-transition="false"
+          router
         >
           <!-- 一级菜单 -->
           <!-- 把id变成字符串形式 -->
@@ -37,7 +38,7 @@
               <span>{{ item.authName }}</span>
             </template>
             <el-menu-item
-              :index="subItem.id + ''"
+              :index="'/' + subItem.path"
               v-for="subItem in item.children"
               :key="subItem.id"
             >
