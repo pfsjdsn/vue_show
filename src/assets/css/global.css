@@ -15,3 +15,7 @@ body,
     /* rgba(red, green, blue, 透明度（0.0（完全透明）和 1.0（完全不透明））) */
     box-shadow: 0 1px 1px rgba(0, 0 ,0,0.15)!important;
 }
+.el-table {
+    margin-top: 15px;
+    font-size: 12px;
+}
