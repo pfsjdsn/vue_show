@@ -6,3 +6,12 @@ body,
     margin: 0;
     padding: 0;
 }
+.el-breadcrumb {
+    margin-bottom: 15px;
+    font-size: 12px;
+}
+.el-card {
+    /* box-shadow ： x, y , 模糊距离, 阴影大小, 阴影颜色 */
+    /* rgba(red, green, blue, 透明度（0.0（完全透明）和 1.0（完全不透明））) */
+    box-shadow: 0 1px 1px rgba(0, 0 ,0,0.15)!important;
+}
