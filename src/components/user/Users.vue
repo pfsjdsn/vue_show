@@ -32,7 +32,36 @@
             <el-switch v-model="scope.row.mg_state"> </el-switch>
           </template>
         </el-table-column>
-        <el-table-column label="操作"> </el-table-column>
+        <el-table-column label="操作" width="180px">
+          <template>
+            <!-- 修改按钮 -->
+            <el-button
+              type="primary"
+              icon="el-icon-edit"
+              size="mini"
+            ></el-button>
+            <!-- 删除按钮 -->
+            <el-button
+              type="danger"
+              icon="el-icon-delete"
+              size="mini"
+            ></el-button>
+            <!-- 分配按钮 -->
+
+            <el-tooltip
+              effect="dark"
+              content="分配角色"
+              placement="top"
+              :enterable="false"
+            >
+              <el-button
+                type="warning"
+                icon="el-icon-setting"
+                size="mini"
+              ></el-button>
+            </el-tooltip>
+          </template>
+        </el-table-column>
       </el-table>
     </el-card>
   </div>
@@ -55,7 +84,9 @@ export default {
   },
   methods: {
     async getUserList () {
-      const { data: res } = await this.$http.get('users', { params: this.queryInfo })
+      const { data: res } = await this.$http.get('users', {
+        params: this.queryInfo
+      })
       if (res.meta.status !== 200) {
         return this.$message.error('获取用户列表失败！')
       }
@@ -65,5 +96,4 @@ export default {
   }
 }
 </script>
-<style lang="less" scoped>
-</style>
+<style lang="less" scoped></style>
