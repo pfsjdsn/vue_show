@@ -63,6 +63,17 @@
           </template>
         </el-table-column>
       </el-table>
+      <!-- 分布区域 -->
+      <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="queryInfo.pagenum"
+        :page-sizes="[1, 2, 5, 10]"
+        :page-size="queryInfo.pagesize"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="total"
+      >
+      </el-pagination>
     </el-card>
   </div>
 </template>
@@ -92,7 +103,15 @@ export default {
       }
       this.userList = res.data.users
       this.total = res.data.total
-    }
+    },
+    handleSizeChange (newSize) {
+      this.queryInfo.pagesize = newSize
+      this.getUserList()
+    },
+    handleCurrentChange (pageNum) {
+      this.queryInfo.pagenum = pageNum
+      this.getUserList()
+    },
   }
 }
 </script>
