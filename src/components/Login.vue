@@ -1,4 +1,5 @@
 <template>
+<!-- 登录页 -->
   <div class="login_container">
     <div class="login_box">
       <!-- 头像 -->
@@ -40,13 +41,14 @@
 export default {
   data () {
     return {
+      // 登录表单
       loginForm: {
         // 用户名
         username: 'admin',
         // 密码
         password: '123456'
       },
-      // 表单验证规则
+      // 登录表单验证规则
       loginFormRules: {
         // 用户名
         username: [
@@ -69,9 +71,9 @@ export default {
     // 登录
     login () {
       this.$refs.loginFormRef.validate(async valid => {
-        if (!valid) return false
+        if (!valid) { return false }
         const { data: res } = await this.$http.post('login', this.loginForm)
-        if (res.meta.status !== 200) return this.$message.error('登录失败')
+        if (res.meta.status !== 200) { return this.$message.error('登录失败') }
         this.$message.success('登录成功')
         // 保存token
         window.sessionStorage.setItem('token', res.data.token)

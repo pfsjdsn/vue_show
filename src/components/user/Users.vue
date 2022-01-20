@@ -1,4 +1,5 @@
 <template>
+<!-- 用户信息页 -->
   <div>
     <!-- 面包屑导航区域 -->
     <el-breadcrumb separator-class="el-icon-arrow-right">
@@ -85,12 +86,15 @@
 export default {
   data () {
     return {
+      // 用户信息列表分页对象
       queryInfo: {
         query: '',
         pagenum: 1,
         pagesize: 2
       },
+      // 用户信息数据
       userList: [],
+      // 总页数
       total: 0
     }
   },
@@ -122,12 +126,12 @@ export default {
     // 监听switch开关状态的改变
     async userStateChanged (userInfo) {
       const { data: res } = await this.$http.put(`users/${userInfo.id}/state/${userInfo.mg_state}`)
-      userInfo.mg_state !== userInfo.mg_state
+      userInfo.mg_state = !userInfo.mg_state
       if (res.meta.status !== 200) {
         return this.$message.error('更新用户状态失败！')
       }
       this.$message.success('更新用户状态成功！')
-    },
+    }
   }
 }
 </script>

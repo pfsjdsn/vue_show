@@ -1,41 +1,40 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+// 登录页
 import Login from '@/components/Login'
 import Home from '@/components/Home'
+// 欢迎页
 import Welcome from '@/components/Welcome'
+// 用户信息页
 import Users from '@/components/user/Users'
 
 Vue.use(Router)
 
 const router = new Router({
   routes: [{
-      path: '/',
-      redirect: '/login'
+    path: '/',
+    redirect: '/login'
+  },
+  {
+    path: '/login',
+    component: Login
+  },
+  {
+    path: '/home',
+    component: Home,
+    redirect: '/welcome',
+    children: [{
+      path: '/welcome',
+      component: Welcome
     },
     {
-      path: '/login',
-      component: Login
-    },
-    {
-      path: '/home',
-      component: Home,
-      redirect: '/welcome',
-      children: [{
-          path: '/welcome',
-          component: Welcome
-        },
-        {
-          path: '/users',
-          component: Users
-        }
-      ]
+      path: '/users',
+      component: Users
     }
+    ]
+  }
   ]
 })
-
-// const router = new VueRouter({
-//   routes
-// })
 
 //  挂载路由导航守卫
 router.beforeEach((to, from, next) => {

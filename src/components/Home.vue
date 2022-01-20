@@ -1,4 +1,5 @@
 <template>
+  <!-- Home 页 -->
   <el-container class="home-container">
     <!-- 头部 -->
     <el-header>
@@ -66,6 +67,7 @@ export default {
     return {
       // 左侧菜单数据
       menuList: [],
+      // 侧边栏图标对象
       iconsObj: {
         125: 'iconfont icon-users',
         103: 'iconfont icon-tijikongjian',
@@ -84,7 +86,7 @@ export default {
     this.activePath = window.sessionStorage.getItem('activePath')
   },
   methods: {
-    //   退出
+    // 退出
     logOut () {
       window.sessionStorage.clear()
       this.$router.push('/login')
@@ -92,7 +94,7 @@ export default {
     // 获取所有菜单
     async getMenuList () {
       const { data: res } = await this.$http.get('menus')
-      if (res.meta.status !== 200) return this.$message.error(res.meta.msg)
+      if (res.meta.status !== 200) { return this.$message.error(res.meta.msg) }
       this.menuList = res.data
     },
     // 切换菜单的折叠与展开
