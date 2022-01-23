@@ -120,9 +120,7 @@
         <!-- 底部区域 -->
         <span slot="footer" class="dialog-footer">
           <el-button @click="addDialogVisible = false">取 消</el-button>
-          <el-button type="primary" @click="addDialogVisible = false"
-            >确 定</el-button
-          >
+          <el-button type="primary" @click="addUser">确 定</el-button>
         </span>
       </el-dialog>
     </el-card>
@@ -231,6 +229,14 @@ export default {
     // 关闭对话框
     addDialogClosed () {
       this.$refs.addFormRef.resetFields()
+    },
+    // 点击确定，添加新用户
+    addUser () {
+      this.addDialogVisible = false
+      this.$refs.addFormRef.validate(valid => {
+        if (!valid) { return }
+
+      })
     }
   }
 }
