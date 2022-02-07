@@ -232,10 +232,16 @@ export default {
     },
     // 点击确定，添加新用户
     addUser () {
-      this.addDialogVisible = false
-      this.$refs.addFormRef.validate(valid => {
+      this.$refs.addFormRef.validate(async valid => {
         if (!valid) { return }
-
+        // 添加用户
+        const { data: res } = await this.$http.post('users', this.addForm)
+        if (res.meta.status !== 201) {
+          this.$message.error('添加用户失败！')
+        }
+        this.$message.success('添加用户成功！')
+        this.addDialogVisible = false
+        this.userList()
       })
     }
   }
