@@ -301,9 +301,21 @@ export default {
     },
     // 修改用户信息并提交
     editUserInfo () {
-      this.$refs.editFormRef.validate(valid => {
+      this.$refs.editFormRef.validate(async valid => {
         if (!valid) { return false }
         // 发起修改用户信息的数据请求
+        const { data: res } = await this.$http.put('users/' + this.editForm.id,
+          {
+            id: this.editForm.id,
+            email: this.editForm.email,
+            mobile: this.editForm.mobile
+          })
+        if (res.meta.status !== 200) {
+          return this.$message.error('更新用户信息失败！')
+        }
+        this.editDialogVisible = false
+        this.getUserList()
+        this.$message.success('更新用户信息成功！')
       })
     }
   }
