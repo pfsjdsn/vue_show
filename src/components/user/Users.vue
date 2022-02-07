@@ -150,9 +150,7 @@
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="editDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="editDialogVisible = false"
-          >确 定</el-button
-        >
+        <el-button type="primary" @click="editUserInfo()">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -300,6 +298,13 @@ export default {
     // 监听修改用户对话框的关闭事件
     editDialogClosed () {
       this.$refs.editFormRef.resetFields()
+    },
+    // 修改用户信息并提交
+    editUserInfo () {
+      this.$refs.editFormRef.validate(valid => {
+        if (!valid) { return false }
+        // 发起修改用户信息的数据请求
+      })
     }
   }
 }
