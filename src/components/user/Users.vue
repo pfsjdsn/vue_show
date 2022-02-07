@@ -62,6 +62,7 @@
               type="danger"
               icon="el-icon-delete"
               size="mini"
+              @click="removeUserById(scope.row.id)"
             ></el-button>
             <!-- 分配按钮 -->
 
@@ -317,6 +318,17 @@ export default {
         this.getUserList()
         this.$message.success('更新用户信息成功！')
       })
+    },
+    // 根据id删除对应的用户信息
+    async removeUserById (id) {
+      const confirmResult = await this.$confirm('此操作将永久删除该用户, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).catch(err => err)
+      if (confirmResult !== 'confirm') {
+        return this.$message.info('已取消删除')
+      }
     }
   }
 }
