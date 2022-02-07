@@ -49,13 +49,13 @@
           </template>
         </el-table-column>
         <el-table-column label="操作" width="180px">
-          <template>
+          <template slot-scope="scope">
             <!-- 修改按钮 -->
             <el-button
               type="primary"
               icon="el-icon-edit"
               size="mini"
-              @click="showEditDialog()"
+              @click="showEditDialog(scope.row.id)"
             ></el-button>
             <!-- 删除按钮 -->
             <el-button
@@ -202,7 +202,9 @@ export default {
         ]
       },
       // 控制修改用户对话框的显示与隐藏
-      editDialogVisible: false
+      editDialogVisible: false,
+      // 查询到的用户信息对象
+      editForm: {}
     }
   },
   created () {
@@ -258,7 +260,13 @@ export default {
       })
     },
     // 展示编辑用户的对话框
-    showEditDialog () {
+    async showEditDialog (id) {
+      const { data: res } = await this.$http.get('users/' + id)
+      if (res.meta.status !== 200) {
+        return this.$message.error('查询用户信息失败！')
+      }
+      this.editForm = res.data
+      console.log(this.editForm, 'this.editForm')
       this.editDialogVisible = true
     }
   }
