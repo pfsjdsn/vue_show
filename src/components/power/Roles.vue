@@ -36,11 +36,19 @@
                   v-for="(item2, i2) in item1.children"
                   :key="item2.id"
                 >
-                  <el-col>
+                  <el-col :span="6">
                     <el-tag type="success">{{ item1.authName }}</el-tag>
                     <i class="el-icon-caret-right"></i>
                   </el-col>
-                  <el-col></el-col>
+                  <el-col :span="18">
+                    <el-tag
+                      v-for="item3 in item2.children"
+                      :key="item3.id"
+                      type="warning"
+                      >{{ item3.authName }}</el-tag
+                    >
+                    <i class="el-icon-caret-right"></i>
+                  </el-col>
                 </el-row>
               </el-col>
             </el-row>
