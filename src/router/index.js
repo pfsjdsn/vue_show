@@ -8,11 +8,13 @@ import Welcome from '@/components/Welcome'
 // 用户信息页
 import Users from '@/components/user/Users'
 import Rights from '@/components/power/Rights'
+import Roles from '@/components/power/Roles'
 
 Vue.use(Router)
 
 const router = new Router({
-  routes: [{
+  routes: [
+    {
       path: '/',
       redirect: '/login'
     },
@@ -24,7 +26,8 @@ const router = new Router({
       path: '/home',
       component: Home,
       redirect: '/welcome',
-      children: [{
+      children: [
+        {
           path: '/welcome',
           component: Welcome
         },
@@ -35,6 +38,10 @@ const router = new Router({
         {
           path: '/rights',
           component: Rights
+        },
+        {
+          path: '/roles',
+          component: Roles
         }
       ]
     }
