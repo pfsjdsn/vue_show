@@ -25,7 +25,11 @@
             >
               <!-- 渲染一级权限 -->
               <el-col :span="5">
-                <el-tag>{{ item1.authName }}</el-tag>
+                <el-tag
+                  @close="removeRightById(scope.row, item1.id)"
+                  closable
+                  >{{ item1.authName }}</el-tag
+                >
                 <i class="el-icon-caret-right"></i>
               </el-col>
               <!-- 渲染二级和三级权限 -->
@@ -37,7 +41,12 @@
                   :key="item2.id"
                 >
                   <el-col :span="6">
-                    <el-tag type="success">{{ item1.authName }}</el-tag>
+                    <el-tag
+                      type="success"
+                      closable
+                      @close="removeRightById(scope.row, item2.id)"
+                      >{{ item1.authName }}</el-tag
+                    >
                     <i class="el-icon-caret-right"></i>
                   </el-col>
 
@@ -48,7 +57,7 @@
                       :key="item3.id"
                       closable
                       type="warning"
-                      @close="removeRightById()"
+                      @close="removeRightById(scope.row, item3.id)"
                       >{{ item3.authName }}</el-tag
                     >
                     <i class="el-icon-caret-right"></i>
@@ -99,7 +108,7 @@ export default {
       console.log(this.roleList)
     },
     // 根据ID删除对应的权限
-    async removeRightById () {
+    async removeRightById (role, rightId) {
       // 弹框提示用户是否要删除
       const confirmResult = await this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
         confirmButtonText: '确定',
@@ -107,6 +116,9 @@ export default {
         type: 'warning'
       }).catch(err => err)
       if (confirmResult !== 'confirm') return this.$message.info('取消了删除！')
+      const { data: res } = await this.$http.delete(`roles/${role.id}/rights/${rightId}`)
+      if (res.meta.status !== 200) return this.$message.error('删除权限失败！')
+      role.children = res.data
     }
   }
 }
