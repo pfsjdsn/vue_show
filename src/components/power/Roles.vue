@@ -40,11 +40,15 @@
                     <el-tag type="success">{{ item1.authName }}</el-tag>
                     <i class="el-icon-caret-right"></i>
                   </el-col>
+
                   <el-col :span="18">
+                    <!-- 渲染三级 -->
                     <el-tag
                       v-for="item3 in item2.children"
                       :key="item3.id"
+                      closable
                       type="warning"
+                      @close="removeRightById()"
                       >{{ item3.authName }}</el-tag
                     >
                     <i class="el-icon-caret-right"></i>
@@ -93,6 +97,16 @@ export default {
       if (res.meta.status !== 200) this.$message.error('获取角色列表失败！')
       this.roleList = res.data
       console.log(this.roleList)
+    },
+    // 根据ID删除对应的权限
+    async removeRightById () {
+      // 弹框提示用户是否要删除
+      const confirmResult = await this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).catch(err => err)
+      if (confirmResult !== 'confirm') return this.$message.info('取消了删除！')
     }
   }
 }
