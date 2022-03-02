@@ -18,6 +18,14 @@
         <!-- 展开列 -->
         <el-table-column type="expand">
           <template slot-scope="scope">
+            <el-row v-for="item1 in scope.row.children" :key="item1.id">
+              <!-- 渲染一级权限 -->
+              <el-col :span="5">
+                <el-tag>{{ item1.authName }}</el-tag>
+              </el-col>
+              <!-- 渲染二级和三级权限 -->
+              <el-col :span="19"></el-col>
+            </el-row>
             <pre>{{ scope.row }}</pre>
           </template>
         </el-table-column>
