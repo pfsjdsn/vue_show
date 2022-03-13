@@ -103,6 +103,7 @@
         show-checkbox
         node-key="id"
         default-expand-all
+        :default-checked-keys="defKeys"
       ></el-tree>
       <span slot="footer" class="dialog-footer">
         <el-button @click="setRightDialogVisible = false">取 消</el-button>
@@ -127,7 +128,10 @@ export default {
       treeProps: {
         label: 'authName',
         children: 'children'
-      }
+      },
+      // 默认选中的节点id值数组
+      defKeys: [101, 102]
+
     }
   },
   created () {
