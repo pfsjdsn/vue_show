@@ -95,6 +95,7 @@
       title="分配权限"
       :visible.sync="setRightDialogVisible"
       width="50%"
+      @close="setRightDialogClosed"
     >
       <!-- 树形控件 -->
       <el-tree
@@ -177,6 +178,10 @@ export default {
       node.children.forEach(item => {
         this.getLeafKeys(item, arr)
       })
+    },
+    // 权限对话框关闭
+    setRightDialogClosed () {
+      this.defKeys = []
     }
   }
 }
