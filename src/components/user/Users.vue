@@ -76,6 +76,7 @@
                 type="warning"
                 icon="el-icon-setting"
                 size="mini"
+                @click="setRole(scope.row)"
               ></el-button>
             </el-tooltip>
           </template>
@@ -152,6 +153,23 @@
       <span slot="footer" class="dialog-footer">
         <el-button @click="editDialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="editUserInfo()">确 定</el-button>
+      </span>
+    </el-dialog>
+    <!--  分配权限的对话框-->
+    <el-dialog
+      title="分配角色"
+      :visible.sync="setRoleDialogVisible"
+      width="50%"
+    >
+      <div>
+        <p>当前的用户：{{ userInfo.username }}</p>
+        <p>当前的角色：{{ userInfo.role_name }}</p>
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="setRoleDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="setRoleDialogVisible = false"
+          >确 定</el-button
+        >
       </span>
     </el-dialog>
   </div>
@@ -232,7 +250,13 @@ export default {
         mobile: [
           { required: true, validator: checkMobile, trigger: 'blur' }
         ]
-      }
+      },
+      // 分配角色对话框显示/隐藏
+      setRoleDialogVisible: false,
+      // 需要被分配角色的用户信息
+      userInfo: {},
+      // 所有角色的数据列表
+      rolesList: []
     }
   },
   created () {
@@ -335,6 +359,17 @@ export default {
       }
       this.$message.success('删除用户成功！')
       this.getUserList()
+    },
+    // 展示分配角色对话框
+    async setRole (userInfo) {
+      this.userInfo = userInfo
+      // 在展示对话框之前，获取所有角色的列表
+      const { data: res } = await this.$http.get('roles')
+      if (res.meta.status !== 200) {
+        return this.$message.error('获取角色列表失败！')
+      }
+      this.rolesList = res.data
+      this.setRoleDialogVisible = true
     }
   }
 }
