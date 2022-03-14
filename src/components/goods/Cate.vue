@@ -22,11 +22,32 @@
 export default {
   data () {
     return {
-
+      // 查询条件
+      queryInfo: {
+        type: 3,
+        pagenum: 1,
+        pagesize: 5
+      },
+      // 商品分类列表
+      cateList: [],
+      // 总数据条数
+      total: 0
     }
   },
-  created () { },
-  methods: {}
+  created () {
+    this.getCateList()
+  },
+  methods: {
+    // 获取商品分类数据
+    async getCateList () {
+      const { data: res } = await this.$http.get('categories', { params: this.queryInfo })
+      if (res.meta.status !== 200) {
+        return this.$message.error('获取商品分类失败！')
+      }
+      this.cateList = res.data.result
+      this.total = res.data.total
+    }
+  }
 
 }
 </script>
