@@ -15,6 +15,7 @@
       </el-row>
       <!-- 表格 -->
       <tree-table
+        class="tree-table"
         :data="cateList"
         :columns="columns"
         :selection-type="false"
@@ -55,6 +56,16 @@
         </template>
       </tree-table>
       <!-- 分页区域 -->
+      <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="queryInfo.pagenum"
+        :page-sizes="[3, 5, 10, 15]"
+        :page-size="queryInfo.pagesize"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="total"
+      >
+      </el-pagination>
     </el-card>
   </div>
 </template>
@@ -114,10 +125,23 @@ export default {
       }
       this.cateList = res.data.result
       this.total = res.data.total
+    },
+    // 监听pagesize的改变
+    handleSizeChange (newSize) {
+      this.queryInfo.pagesize = newSize
+      this.getCateList()
+    },
+    // 监听pagenum的改变
+    handleCurrentChange (newPage) {
+      this.queryInfo.pagenum = newPage
+      this.getCateList()
     }
   }
 
 }
 </script>
 <style lang="less" scoped>
+.tree-table {
+  margin-top: 15px;
+}
 </style>
