@@ -149,7 +149,7 @@ export default {
         // 分类的等级
         cat_level: 0
       },
-      //  表单验证规则 
+      // 表单验证规则
       addCateFormRules: {
         cat_name: [
           { required: true, message: '请输入分类名称', trigger: 'blur' }

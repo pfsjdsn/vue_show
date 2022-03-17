@@ -39,7 +39,7 @@ export default {
     this.getRightsList()
   },
   methods: {
-    //获取权限列表
+    // 获取权限列表
     async getRightsList () {
       const { data: res } = await this.$http.get('rights/list')
       if (res.meta.status !== 200) {
