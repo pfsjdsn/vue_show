@@ -304,6 +304,7 @@ export default {
       if (res.meta.status !== 200) {
         return this.$message.error('更新用户状态失败！')
       }
+      this.getUserList()
       this.$message.success('更新用户状态成功！')
     },
     // 关闭对话框
