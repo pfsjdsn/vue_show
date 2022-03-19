@@ -73,6 +73,7 @@
         title="添加分类"
         :visible.sync="addCateDialogVisible"
         width="50%"
+        @close="addCateDialogClosed"
       >
         <!-- 添加分类的表单 -->
         <el-form
@@ -217,9 +218,7 @@ export default {
         this.addCateForm.cat_pid = this.selectedKeys[this.selectedKeys.length - 1]
         this.addCateForm.cat_level = this.selectedKeys.length
         return false
-      }
-
-      else {
+      } else {
         this.addCateForm.cat_pid = 0
         this.addCateForm.cat_level = 0
       }
@@ -228,8 +227,14 @@ export default {
     addCate () {
       console.log(this.addCateForm)
       this.addCateDialogVisible = false
+    },
+    // 关闭添加分类弹框
+    addCateDialogClosed () {
+      this.$refs.addCateFormRef.resetFields()
+      this.selectedKeys = []
+      this.addCateForm.cat_level = 0
+      this.addCateForm.cat_pid = 0
     }
-
   }
 
 }
