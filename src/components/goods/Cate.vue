@@ -225,8 +225,16 @@ export default {
     },
     // 添加分类
     addCate () {
-      console.log(this.addCateForm)
-      this.addCateDialogVisible = false
+      this.$refs.addCateFormRef.validate(async valid => {
+        if (!valid) return false
+        const { data: res } = await this.$http.post('categories', this.addCateForm)
+        if (res.meta.status !== 201) {
+          return this.$message.error('添加分类失败')
+        }
+        this.$message.success('添加分类成功')
+        this.getCateList()
+        this.addCateDialogVisible = false
+      })
     },
     // 关闭添加分类弹框
     addCateDialogClosed () {
