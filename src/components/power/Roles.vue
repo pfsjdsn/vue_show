@@ -257,7 +257,6 @@ export default {
       this.addForm.roleName = ''
       this.addForm.roleDesc = ''
     }
-
   }
 }
 </script>

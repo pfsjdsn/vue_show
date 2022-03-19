@@ -229,9 +229,9 @@ export default {
         if (!valid) return false
         const { data: res } = await this.$http.post('categories', this.addCateForm)
         if (res.meta.status !== 201) {
-          return this.$message.error('添加分类失败')
+          return this.$message.error('添加分类失败！')
         }
-        this.$message.success('添加分类成功')
+        this.$message.success('添加分类成功！')
         this.getCateList()
         this.addCateDialogVisible = false
       })
