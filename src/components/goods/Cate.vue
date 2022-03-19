@@ -98,9 +98,7 @@
         </el-form>
         <span slot="footer" class="dialog-footer">
           <el-button @click="addCateDialogVisible = false">取 消</el-button>
-          <el-button type="primary" @click="addCateDialogVisible = false"
-            >确 定</el-button
-          >
+          <el-button type="primary" @click="addCate">确 定</el-button>
         </span>
       </el-dialog>
     </el-card>
@@ -215,8 +213,23 @@ export default {
     },
     // 选择父级分类
     parentCateChanged () {
-      console.log(this.selectedKeys)
+      if (this.selectedKeys.length > 0) {
+        this.addCateForm.cat_pid = this.selectedKeys[this.selectedKeys.length - 1]
+        this.addCateForm.cat_level = this.selectedKeys.length
+        return false
+      }
+
+      else {
+        this.addCateForm.cat_pid = 0
+        this.addCateForm.cat_level = 0
+      }
+    },
+    // 添加分类
+    addCate () {
+      console.log(this.addCateForm)
+      this.addCateDialogVisible = false
     }
+
   }
 
 }
