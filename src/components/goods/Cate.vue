@@ -48,8 +48,12 @@
           <el-tag type="warning" size="mini" v-else>三级</el-tag>
         </template>
         <!-- 操作 -->
-        <template slot="opt">
-          <el-button type="primary" icon="el-icon-edit" size="mini"
+        <template slot="opt" slot-scope="scope">
+          <el-button
+            type="primary"
+            icon="el-icon-edit"
+            size="mini"
+            @click="showEditDialog(scope.row.cat_id)"
             >编辑</el-button
           >
           <el-button type="danger" icon="el-icon-delete" size="mini"
@@ -100,6 +104,33 @@
         <span slot="footer" class="dialog-footer">
           <el-button @click="addCateDialogVisible = false">取 消</el-button>
           <el-button type="primary" @click="addCate">确 定</el-button>
+        </span>
+      </el-dialog>
+      <!-- 编辑商品分类的对话框 -->
+      <el-dialog
+        title="编辑商品分类"
+        :visible.sync="editDialogVisible"
+        width="50%"
+        @close="editDialogClosed"
+      >
+        <el-form
+          :model="editForm"
+          :rules="editFormRules"
+          ref="editFormRef"
+          label-width="100px"
+        >
+          <el-form-item label="分类 ID">
+            <el-input v-model="editForm.cat_id" disabled></el-input>
+          </el-form-item>
+          <el-form-item label="分类名称" prop="cat_name">
+            <el-input v-model="editForm.cat_name"></el-input>
+          </el-form-item>
+        </el-form>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="editDialogVisible = false">取 消</el-button>
+          <el-button type="primary" @click="editClassificationInfo()"
+            >确 定</el-button
+          >
         </span>
       </el-dialog>
     </el-card>
@@ -173,7 +204,17 @@ export default {
         children: 'children'
       },
       //   选中的父级分类的id数组
-      selectedKeys: []
+      selectedKeys: [],
+      // 查询到的用户信息对象
+      editForm: {},
+      // 修改表单验证规则对象
+      editFormRules: {
+        cat_name: [
+          { required: true, message: '分类名称', trigger: 'blur' }
+        ]
+      },
+      // 控制修改分类对话框的显示与隐藏
+      editDialogVisible: false
     }
   },
   created () {
@@ -242,6 +283,35 @@ export default {
       this.selectedKeys = []
       this.addCateForm.cat_level = 0
       this.addCateForm.cat_pid = 0
+    },
+    async showEditDialog (id) {
+      const { data: res } = await this.$http.get('categories/' + id)
+      if (res.meta.status !== 200) {
+        return this.$message.error('查询商品分类信息失败！')
+      }
+      this.editForm = res.data
+      this.editDialogVisible = true
+    },
+    // 监听修改分类对话框的关闭事件
+    editDialogClosed () {
+      this.$refs.editFormRef.resetFields()
+    },
+    // 编辑分类
+    editClassificationInfo () {
+      this.$refs.editFormRef.validate(async valid => {
+        if (!valid) return false
+        const { data: res } = await this.$http.put('categories/' + this.editForm.cat_id,
+          {
+            id: this.editForm.cat_id,
+            cat_name: this.editForm.cat_name
+          })
+        if (res.meta.status !== 200) {
+          return this.$message.error('编辑商品分类失败！')
+        }
+        this.editDialogVisible = false
+        this.getCateList()
+        this.$message.success('编辑商品分类成功！')
+      })
     }
   }
 
