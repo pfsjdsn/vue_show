@@ -63,7 +63,11 @@ export default {
     },
     // 级联选择框选中项变化
     handleChange () {
-
+      // 只能选中三级分类
+      if (this.selectedCateKeys.length !== 3) {
+        this.selectedCateKeys = []
+        return false
+      }
     }
   }
 }
