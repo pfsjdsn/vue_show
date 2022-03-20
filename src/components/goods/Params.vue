@@ -32,8 +32,20 @@
       </el-row>
       <!-- tab页签区域 -->
       <el-tabs v-model="activeName" @tab-click="handleTabClick">
-        <el-tab-pane label="动态参数" name="first">动态参数</el-tab-pane>
-        <el-tab-pane label="静态属性" name="second">静态属性</el-tab-pane>
+        <!-- 添加动态参数的面板 -->
+        <el-tab-pane label="动态参数" name="first">
+          <!-- 添加参数的按钮 -->
+          <el-button type="primary" size="mini" :disabled="isBtnDisabled"
+            >添加参数</el-button
+          >
+        </el-tab-pane>
+        <!-- 添加静态属性的面板 -->
+        <el-tab-pane label="静态属性" name="second">
+          <!-- 添加参数的按钮 -->
+          <el-button type="primary" size="mini" :disabled="isBtnDisabled"
+            >添加参数</el-button
+          >
+        </el-tab-pane>
       </el-tabs>
     </el-card>
   </div>
@@ -79,6 +91,16 @@ export default {
     // tab点击事件
     handleTabClick () {
 
+    }
+  },
+  computed: {
+    isBtnDisabled () {
+      // 如果不是选中的三级菜单，要禁用
+      if (this.selectedCateKeys.length !== 3) {
+        return true
+      }
+      // 否则启用
+      return false
     }
   }
 }
