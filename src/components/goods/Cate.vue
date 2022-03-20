@@ -56,7 +56,11 @@
             @click="showEditDialog(scope.row.cat_id)"
             >编辑</el-button
           >
-          <el-button type="danger" icon="el-icon-delete" size="mini"
+          <el-button
+            type="danger"
+            icon="el-icon-delete"
+            size="mini"
+            @click="removeRoleById(scope.row.cat_id)"
             >删除</el-button
           >
         </template>
@@ -312,6 +316,23 @@ export default {
         this.getCateList()
         this.$message.success('编辑商品分类成功！')
       })
+    },
+    // 删除商品分类
+    async removeRoleById (id) {
+      const confirmResult = await this.$confirm('此操作将永久删除该商品分类, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).catch(err => err)
+      if (confirmResult !== 'confirm') {
+        return this.$message.info('已取消删除')
+      }
+      const { data: res } = await this.$http.delete('categories/' + id)
+      if (res.meta.status !== 200) {
+        return this.$message.error('删除商品分类失败！')
+      }
+      this.$message.success('删除商品分类成功！')
+      this.getCateList()
     }
   }
 
