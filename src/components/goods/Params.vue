@@ -20,6 +20,14 @@
         <el-col>
           <span>选择商品分类：</span>
           <!-- 选择商品分类的级联选择框 -->
+          <el-cascader
+            expand-trigger="hover"
+            :options="cateList"
+            :props="cateProps"
+            v-model="selectedCateKeys"
+            @change="handleChange"
+          >
+          </el-cascader>
         </el-col>
       </el-row>
     </el-card>
@@ -30,7 +38,15 @@ export default {
   data () {
     return {
       // 商品分类列表
-      cateList: []
+      cateList: [],
+      // 级联选择框的配置对象
+      cateProps: {
+        value: 'cat_id',
+        label: 'cat_name',
+        children: 'children'
+      },
+      // 级联选择框双向绑定到的数组
+      selectedCateKeys: []
     }
   },
   created () {
@@ -44,6 +60,10 @@ export default {
         return this.$message.error('获取商品分类失败！')
       }
       this.cateList = res.data
+    },
+    // 级联选择框选中项变化
+    handleChange () {
+
     }
   }
 }
