@@ -30,6 +30,11 @@
           </el-cascader>
         </el-col>
       </el-row>
+      <!-- tab页签区域 -->
+      <el-tabs v-model="activeName" @tab-click="handleTabClick">
+        <el-tab-pane label="动态参数" name="first">动态参数</el-tab-pane>
+        <el-tab-pane label="静态属性" name="second">静态属性</el-tab-pane>
+      </el-tabs>
     </el-card>
   </div>
 </template>
@@ -46,7 +51,9 @@ export default {
         children: 'children'
       },
       // 级联选择框双向绑定到的数组
-      selectedCateKeys: []
+      selectedCateKeys: [],
+      // 被激活的页签名称
+      activeName: 'first'
     }
   },
   created () {
@@ -68,6 +75,10 @@ export default {
         this.selectedCateKeys = []
         return false
       }
+    },
+    // tab点击事件
+    handleTabClick () {
+
     }
   }
 }
