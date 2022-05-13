@@ -81,7 +81,14 @@ export default {
       this.cateList = res.data
     },
     // 级联选择框选中项变化
-    async handleChange () {
+    handleChange () {
+      this.getParamsData()
+    },
+    // tab点击事件
+    handleTabClick () {
+      this.getParamsData()
+    },
+    async getParamsData () {
       // 选中的不是三级分类
       if (this.selectedCateKeys.length !== 3) {
         this.selectedCateKeys = []
@@ -95,10 +102,6 @@ export default {
       if (res.meta.status !== 200) {
         return this.$message.error('获取参数列表失败！')
       }
-    },
-    // tab点击事件
-    handleTabClick () {
-
     }
   },
   computed: {
