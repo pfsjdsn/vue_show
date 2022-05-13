@@ -33,14 +33,14 @@
       <!-- tab页签区域 -->
       <el-tabs v-model="activeName" @tab-click="handleTabClick">
         <!-- 添加动态参数的面板 -->
-        <el-tab-pane label="动态参数" name="first">
+        <el-tab-pane label="动态参数" name="many">
           <!-- 添加参数的按钮 -->
           <el-button type="primary" size="mini" :disabled="isBtnDisabled"
             >添加参数</el-button
           >
         </el-tab-pane>
         <!-- 添加静态属性的面板 -->
-        <el-tab-pane label="静态属性" name="second">
+        <el-tab-pane label="静态属性" name="only">
           <!-- 添加参数的按钮 -->
           <el-button type="primary" size="mini" :disabled="isBtnDisabled"
             >添加参数</el-button
@@ -65,7 +65,7 @@ export default {
       // 级联选择框双向绑定到的数组
       selectedCateKeys: [],
       // 被激活的页签名称
-      activeName: 'first'
+      activeName: 'many'
     }
   },
   created () {
@@ -81,11 +81,19 @@ export default {
       this.cateList = res.data
     },
     // 级联选择框选中项变化
-    handleChange () {
-      // 只能选中三级分类
+    async handleChange () {
+      // 选中的不是三级分类
       if (this.selectedCateKeys.length !== 3) {
         this.selectedCateKeys = []
         return false
+      }
+      // 选中的是三级分类
+      const { data: res } = await this.$http.get(`categories/${this.cateId}/attributes`,
+        {
+          params: { sel: this.activeName }
+        })
+      if (res.meta.status !== 200) {
+        return this.$message.error('获取参数列表失败！')
       }
     },
     // tab点击事件
@@ -94,6 +102,7 @@ export default {
     }
   },
   computed: {
+    // 如按钮需被禁用，则返回true，否则返回false
     isBtnDisabled () {
       // 如果不是选中的三级菜单，要禁用
       if (this.selectedCateKeys.length !== 3) {
@@ -101,6 +110,13 @@ export default {
       }
       // 否则启用
       return false
+    },
+    // 当前选中的三级分类的id
+    cateId () {
+      if (this.selectedCateKeys.length === 3) {
+        return this.selectedCateKeys[2]
+      }
+      return null
     }
   }
 }
